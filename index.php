@@ -60,12 +60,16 @@ $query_vendas = mysqli_query($conexao, $buscar_vendas);
 					<br>
 				<div class="form-">
 					<form class="form-horizontal" class="busca">
-						<label for="idprodutopesq">ID do Produto (Consulta):</label>
-						<input type="text" class="form-control" name="idprodutopesq">
-						<label for="nomeprodutopesq">Nome do Produto:</label>
-						<input type="text" class="form-control" name="nomeprodutopesq">
+						<div class="col-sm-4">
+							<label for="idprodutopesq">ID do Produto (Consulta):</label>
+							<input type="text" class="form-control" name="idprodutopesq">
+						</div>
+						<div class="col-sm-4">
+							<label for="nomeprodutopesq">Nome do Produto:</label>
+							<input type="text" class="form-control" name="nomeprodutopesq">
+						</div>
 						<br>
-						<input type="submit" class="btn btn-primary btn-block" value="Buscar">
+						<input type="submit" class="btn btn-primary btn-block col-sm-4" value="Buscar">
 					</form>
 				</div>
 			</div>
@@ -84,6 +88,8 @@ $query_vendas = mysqli_query($conexao, $buscar_vendas);
 					<tbody>
 						<?php
 
+
+
 							while ($receber_vendas = mysqli_fetch_array($query_vendas)) {
 									$id_prod = $receber_vendas['id_prod'];
 									$nome_prod = $receber_vendas['nome_prod'];
@@ -98,8 +104,24 @@ $query_vendas = mysqli_query($conexao, $buscar_vendas);
 							<td><?php echo $nome_forn;  ?></td>
 							<td><?php echo $preco_venda;  ?></td>
 							<td><?php echo $data_venda;  ?></td>
+							
+						
+						<?php } 
+
+						$somar_vendas = "SELECT
+							SUM(preco_venda) as 'soma'
+						FROM vendas
+						GROUP BY 'soma'";
+
+						$query_total = mysqli_query($conexao, $somar_vendas);
+
+						$recebe_total = mysqli_fetch_assoc($query_total);
+
+						$soma = $recebe_total['soma'];
+
+						?>
+							<td colspan="5">Total vendido: <?php echo $soma; ?></td>
 						</tr>
-						<?php } ?>
 					</tbody>
 				</table>
 				<br>
